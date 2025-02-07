@@ -20,25 +20,26 @@ class CalculateMortgage extends Command
     public function handle(): int
     {
 
-        $income = $this->argument('income');
-        $propertyValue = $this->argument('propertyValue');
+        $income = (int) $this->argument('income');
+        $propertyValue = (int) $this->argument('propertyValue');
 
-        if (empty($income) || empty($propertyValue)) {
-            $this->error('The income or property value parameters are required.');
+        if ($income > 0 && $propertyValue > 0) {
+            $this->error(__('messages.fill_one_field'));
+
             return 1;
-        }
-
-        if ($income > 0) {
+        } elseif ($income > 0) {
             $result = $this->mortgageApiClient->getMaximumMortgageByIncome($income);
-            $this->info("Maximale hypotheek op basis van inkomen: " . $result['max_mortgage']);
+
+            $this->info(__('messages.calculation_based_on_income') . round($result['data']['result'],2));
             return 0;
         } elseif ($propertyValue > 0) {
             $result = $this->mortgageApiClient->getMaximumMortgageByValue($propertyValue);
-            $this->info("Maximale hypotheek op basis van woningwaarde: " . $result['max_mortgage']);
+
+            $this->info(__('messages.calculation_based_on_property_value') . $result['data']['result']);
             return 0;
-        } else {
-            $this->error('Geef zowel inkomen als woningwaarde op om een berekening uit te voeren.');
-            return 1;
         }
+
+        $this->error(__('messages.error_message'));
+        return 1;
     }
 }

@@ -6,7 +6,10 @@ use App\Services\MortgageApiClient;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MortgageController extends Controller
 {
@@ -22,24 +25,31 @@ class MortgageController extends Controller
         return view('mortgage.index');
     }
 
-    public function calculate(Request $request)
+    public function calculate(Request $request): Factory|View|Application|RedirectResponse
     {
-        $request->validate([
-            'income' => 'required|numeric|min:0',
-            'object_value' => 'required|numeric|min:0',
+        $data = $request->only(['income', 'object_value']);
+
+        $validator = Validator::make($data, [
+            'income' => 'nullable|numeric|required_without:object_value',
+            'object_value' => 'nullable|numeric|required_without:income',
         ]);
 
-        try {
-            $maxByIncome = $this->client->getMaximumMortgageByIncome($request->input('income'));
-            $maxByValue = $this->client->getMaximumMortgageByValue($request->input('object_value'));
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
-            return view('result', [
-                'maxByIncome' => $maxByIncome['data']['result'],
-                'maxByValue' => $maxByValue['data']['result'],
-                'calculationValues' => $maxByValue['data']['calculationValues'],
-            ]);
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        try {
+            if (!empty($data['income'])) {
+                $result = $this->client->getMaximumMortgageByIncome($data['income']);
+
+                return view('mortgage.result', ['result' => $result, 'type' => 'income']);
+            } else {
+                $result = $this->client->getMaximumMortgageByValue($data['object_value']);
+
+                return view('mortgage.result', ['result' => $result, 'type' => 'value']);
+            }
+        } catch (RequestException $e) {
+            return back()->withErrors(['api_error' => __('messages.api_error')])->withInput();
         }
     }
 }

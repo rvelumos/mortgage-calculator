@@ -1,21 +1,27 @@
-<form action="{{ route('mortgage.calculate') }}" method="POST">
-    @csrf
-    <label for="income">{{ __('messages.enter_income') }}</label>
-    <input type="number" id="income" name="income" required>
+@extends('layouts.app')
 
-    <label for="object_value">{{ __('messages.enter_object_value') }}</label>
-    <input type="number" id="object_value" name="object_value" required>
+@section('content')
+    <h1>{{ __('messages.mortgage_calculator') }}</h1>
+    <p>{{ __('messages.description') }}</p>
+    <form action="{{ route('mortgage.calculate') }}" method="POST" onsubmit="return validateForm()">
+        @csrf
+        <label for="income">{{ __('messages.income_label') }}</label>
+        <input type="number" id="income" name="income" value="{{ old('income') }}">
 
-    <button type="submit">{{ __('messages.calculate') }}</button>
-</form>
+        <label for="object_value">{{ __('messages.value_label') }}</label>
+        <input type="number" id="object_value" name="object_value" value="{{ old('object_value') }}">
 
-@if ($errors->any())
-    <div>
-        <strong>{{ __('messages.error') }}</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <button type="submit">{{ __('messages.calculate_button') }}</button>
+    </form>
+
+    @if ($errors->any())
+        <div>
+            <strong>{{ __('messages.error') }}</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+@endsection

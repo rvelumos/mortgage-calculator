@@ -20,33 +20,27 @@ class MortgageCalculateCommandTest extends TestCase
     }
 
     #[Test]
-    public function test_command_returns_correct_mortgage_data()
+    public function expect_command_fails_when_two_arguments_are_passed()
     {
-        Http::fake([
-            "{$this->baseUrl}/calculation/v1/mortgage/maximum-by-income*" => Http::response([
-                'data' => ['result' => 572850.29],
-            ]),
-            "{$this->baseUrl}/calculation/v1/mortgage/maximum-by-value*" => Http::response([
-                'data' => ['result' => 350000],
-            ]),
-        ]);
-
         $this->artisan('mortgage:calculate 100000 350000')
-            ->expectsOutput('Max mortgage by income: 572850.29')
-            ->expectsOutput('Max mortgage by value: 350000')
-            ->assertExitCode(0);
+            ->expectsOutput(__('messages.fill_one_field'))
+            ->assertExitCode(1);
     }
 
     #[Test]
-    public function test_command_handles_invalid_api_key()
+    public function expect_command_fails_when_invalid_arguments_are_passed()
     {
-        Http::fake([
-            "{$this->baseUrl}/calculation/v1/mortgage/maximum-by-income*" => Http::response([
-                'error' => ['code' => 403, 'message' => 'Invalid apiKey provided']
-            ], 403),
-        ]);
-
-        $this->artisan('mortgage:calculate 100000 350000')
+        $this->artisan('mortgage:calculate ABC XXX')
+            ->expectsOutput(__('messages.error_message'))
             ->assertExitCode(1);
+    }
+
+    #[Test]
+    public function expect_printed_message_with_calculated_mortgage()
+    {
+
+        $this->artisan('mortgage:calculate 100000 0')
+            ->expectsOutput(__('messages.calculation_based_on_income').'560213.43')
+            ->assertExitCode(0);
     }
 }
