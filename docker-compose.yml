@@ -1,15 +1,14 @@
 version: '3.8'
 
 services:
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: php82-container
-    working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
-    command: php -a
-    tty: true
-    ports:
-      - "9000:9000"
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: mortgage-calculator-container
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        command: php -S 0.0.0.0:8000 -t public
+        ports:
+            - "8000:8000"

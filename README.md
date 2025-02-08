@@ -84,4 +84,4 @@ Wil je graag wat meer flexibiliteit, dan kan je kiezen voor een Docker installat
 3. Start de containers met build  
    docker-compose up --build -d
 
-4. De app is nu bereikbaar via http://localhost:9000
+4. De app is nu bereikbaar via http://localhost:8000
