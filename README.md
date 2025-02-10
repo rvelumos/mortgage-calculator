@@ -56,17 +56,17 @@ De waardes die je in je .env moet aanpassen (dit bestand vind je in de root van 
 
 
 ### Installatie (Laravel)
-1. Clone de repository naar je lokale machine.
+Clone de repository naar je lokale machine.
 
-   git clone https://github.com/rvelumos/mortgage-calculator.git
+    git clone https://github.com/rvelumos/mortgage-calculator.git  
 
-2. Installeer vereiste pakketten:
+Installeer vereiste pakketten:
 
-   composer install
+    composer install   
 
-3. Start de Laravel server:
+Start de Laravel server:
 
-   php artisan serve
+    php artisan serve  
 
 4.  De app is nu bereikbaar via http://localhost:8000/
 
@@ -75,13 +75,16 @@ De waardes die je in je .env moet aanpassen (dit bestand vind je in de root van 
 Wil je graag wat meer flexibiliteit, dan kan je kiezen voor een Docker installatie.
 
 ### Vereisten
-1. [Docker Desktop](https://www.docker.com/products/docker-desktop) installeren
+[Docker Desktop](https://www.docker.com/products/docker-desktop) installeren
 
-2. Clone de repository
-   git clone [https://github.com/rvelumos/mortgage-calculator.git](https://github.com/rvelumos/mortgage-calculator.git)
-   navigeer naar de root van het project
+Clone de repository
 
-3. Start de containers met build  
-   docker-compose up --build -d
+    git clone [https://github.com/rvelumos/mortgage-calculator.git](https://github.com/rvelumos/mortgage-calculator.git)
 
-4. De app is nu bereikbaar via http://localhost:8000
+Navigeer naar de root van het project
+
+Start de containers met build
+
+    docker-compose up --build -d
+
+De app is nu bereikbaar via http://localhost:9000
