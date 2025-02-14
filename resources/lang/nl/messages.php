@@ -13,6 +13,8 @@ return [
     'error' => 'Er is een fout opgetreden:',
     'fill_one_field' => 'Vul een van de velden in. Let op: het is niet mogelijk om beide velden in te vullen.',
     'both_fields_filled' => 'U kunt slechts één veld invoeren.',
+    'invalid_type' => 'Ongeldig type.',
+    'invalid_value' => 'Ongeldige waarde.',
     'mortgage_result' => 'Resultaat van Hypotheekberekening',
     'calculation_based_on_income' => 'Berekening op basis van inkomen:',
     'calculation_based_on_property_value' => 'Berekening op basis van woningwaarde:',

@@ -54,7 +54,7 @@ class MortgageApiClientTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Parameter person[0][income] is required.');
 
-        $this->mortgageClient->getMaximumMortgageByIncome(null);
+        $this->mortgageClient->getMaximumMortgageByIncome((int)null);
     }
 
     #[Test]

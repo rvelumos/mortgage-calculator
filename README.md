@@ -10,12 +10,14 @@ In dit project heb ik zowel een **CLI-applicatie** als een **webinterface** ontw
 ## CLI
 Om een berekening te maken dien je het volgende commando te gebruiken:
 
-    mortgage:calculate {income} {propertyValue}  
+    mortgage:calculate-by {type} {value}  
 
 
-Er kan een parameter per berekening worden gebruikt. Gebruik voor een ongebruikte parameter '0', bijvoorbeeld
+Er kan een parameter per berekening worden gebruikt per type. De keuze voor {type} bestaat uit: "value" of "income"  , bijvoorbeeld
 
-    mortgage:calculate 0 500000  
+    mortgage:calculate-by income 500000  
+
+Het resultaat zal worden geprint in je CLI.
 
 ## Webinterface
 
@@ -51,8 +53,8 @@ Welke manier van installatie je ook kiest, zorg ervoor dat de .env variabelen zi
 De waardes die je in je .env moet aanpassen (dit bestand vind je in de root van je project):
 
 
-    MORTGCAGE_API_URL=  
-    MORTGCAGE_API_KEY=
+    MORTGAGE_API_URL=  
+    MORTGAGE_API_KEY=
 
 
 ### Installatie (Laravel)

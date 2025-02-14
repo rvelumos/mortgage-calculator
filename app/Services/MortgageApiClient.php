@@ -16,7 +16,7 @@ class MortgageApiClient
         $this->apiKey = config('mortgage.api_key');
     }
 
-    public function getMaximumMortgageByIncome($income)
+    public function getMaximumMortgageByIncome(int $income)
     {
         $response = Http::get($this->baseUrl . 'calculation/v1/mortgage/maximum-by-income', [
             'percentage' => 1.501,
@@ -31,7 +31,7 @@ class MortgageApiClient
         return $response->json();
     }
 
-    public function getMaximumMortgageByValue($value)
+    public function getMaximumMortgageByValue(int $value)
     {
 
         $response = Http::get($this->baseUrl . 'calculation/v1/mortgage/maximum-by-value', [
