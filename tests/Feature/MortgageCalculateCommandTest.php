@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class MortgageCalculateCommandTest extends TestCase
 {
-
     protected mixed $baseUrl;
     protected mixed $apiKey;
     protected function setUp(): void
@@ -35,7 +34,7 @@ class MortgageCalculateCommandTest extends TestCase
     {
 
         $this->artisan('mortgage:calculate-by income 10000')
-            ->expectsOutput(__('messages.calculation_based_on_income').'38628.51')
+            ->expectsOutput(__('messages.calculation_based_on_income') . '38628.51')
             ->assertExitCode(0);
     }
 }

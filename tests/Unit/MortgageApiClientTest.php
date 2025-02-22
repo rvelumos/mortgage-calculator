@@ -116,4 +116,3 @@ class MortgageApiClientTest extends TestCase
         $this->assertEquals(999999999.99, $result['data']['result']);
     }
 }
-
